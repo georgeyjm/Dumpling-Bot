@@ -58,7 +58,7 @@ def text_reply(msg):
             inp = cont[5:]
             urlRe = re.compile(r'(http://)?tieba\.baidu\.com/p/[0-9]+')
             if urlRe.findall(inp):
-                if inp[:6] != 'http://':
+                if inp[:7] != 'http://':
                     inp = 'http://' + inp
                 if '?' in inp:
                     inp = urlRe.search(inp).group()
