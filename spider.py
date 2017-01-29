@@ -8,6 +8,7 @@ import re
 import random
 import codecs
 import json
+import string
 
 def get_joke():
     url = 'http://www.qiushibaike.com/'
@@ -38,3 +39,32 @@ def get_hot():
         hots += '· {}\n'.format(i)
     hots += '注：热点均来自今日头条(toutiao.com)'
     return hots
+
+def get_tieba_img(url):
+    while True:
+        dirName = ''.join([random.choice(string.ascii_uppercase) for i in range(8)])
+        try:
+            os.mkdir(dirName)
+            os.chdir(dirName)
+            break
+        except FileExistsError:
+            pass
+    count = 0
+    crawlUrl = url + '?see_lz=1&pn=1'
+    web = requests.get(crawlUrl)
+    soup = BeautifulSoup(web.text, 'lxml')
+    for img in soup.select('img.BDE_Image'):
+        src = img.get('src')
+        bigSrc = 'http://imgsrc.baidu.com/forum/pic/item/' + str(src).split('/')[6]
+        try:
+            req = requests.get(bigSrc, timeout=15, stream=True)
+            if req.status_code == 200:
+                with open('{}.jpg'.format(count),'wb') as imgFile:
+                    req.raw.decode_content = True
+                    shutil.copyfileobj(req.raw, imgFile)
+            else:
+                print('Error while requesting image: {}'.format(bigSrc))
+        except Exception:
+            print('Timeout while trying to download image: {}'.format(bigSrc))
+        count += 1
+    return dirName, count
