@@ -2,7 +2,7 @@
 
 *A WeChat bot.*
 
-Latest Version: **Pre-Release**
+Latest Version: **Pre-Release (Alpha 1.0.1)**
 
 Python Version: **3.5**
 
