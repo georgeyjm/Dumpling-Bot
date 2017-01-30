@@ -70,6 +70,19 @@ def text_reply(msg):
             itchat.send('@{}\u2005你只能爬取第一页楼主发的图片，要爬取更多图片，请联系@熏鱼饺子\u2005进行账户升级'.format(msg['ActualNickName']), msg['FromUserName'])
             os.remove(title+'.zip')
             shutil.rmtree(title)
+        elif cont[:4] == '贴吧文字':
+            itchat.send('@{}\u2005稍等一下哈，我整合一下！'.format(msg['ActualNickName']), msg['FromUserName'])
+            inp = cont[5:]
+            urlRe = re.compile(r'(http://)?tieba\.baidu\.com/p/[0-9]+')
+            if urlRe.findall(inp):
+                if inp[:7] != 'http://':
+                    inp = 'http://' + inp
+                if '?' in inp:
+                    inp = urlRe.search(inp).group()
+                title = spider.get_tieba_text(inp+'/')
+                itchat.send('@fil@{}'.format(title), msg['FromUserName'])
+            itchat.send('@{}\u2005你只能爬取第一页楼主发的文字，要爬取更多内容，请联系@熏鱼饺子\u2005进行账户升级'.format(msg['ActualNickName']), msg['FromUserName'])
+            os.remove(title)
         else:
             for i in ('嘿','你好','hi','hello','hey','bonjour','bonsoir'):
                 if i in cont.lower():
@@ -79,4 +92,4 @@ def text_reply(msg):
                 itchat.send('@{}\u2005{}'.format(msg['ActualNickName'], choice(DONT_UNDERSTAND)), msg['FromUserName'])
 
 itchat.auto_login(True, enableCmdQR=2)
-itchat.run(debug=True)
+itchat.run()
