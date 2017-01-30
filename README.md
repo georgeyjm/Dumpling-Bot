@@ -11,10 +11,12 @@ Supported OS: **OSX(macOS) / Windows**
 Dependencies: **itchat**, requests, bs4, sympy
 
 ##Known Issues
-See *[Bugs.md](https://github.com/yu-george/Dumpling-Bot/blob/master/Bugs.md)*
+See *[Issues.md](https://github.com/yu-george/Dumpling-Bot/blob/master/Issues.md)* or [Issues](https://github.com/yu-george/Dumpling-Bot/issues)
 
 ##Goals
 - [x] News
 - [x] Jokes
-- [ ] Movie Downloads
-- [ ] Buy Movie Tickets
+- [ ] Movie downloads
+- [ ] Buy movie tickets
+- [ ] Better chat system
+- [ ] Account upgrading
