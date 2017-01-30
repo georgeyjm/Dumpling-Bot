@@ -62,12 +62,14 @@ def text_reply(msg):
                     inp = 'http://' + inp
                 if '?' in inp:
                     inp = urlRe.search(inp).group()
-                dirName, imgCount = spider.get_tieba_img(inp+'/')
-                for i in range(imgCount):
-                    itchat.send('@img@{}'.format('{}.jpg'.format(i)), msg['FromUserName'])
+##                dirName, imgCount = spider.get_tieba_img(inp+'/')
+##                for i in range(imgCount):
+##                    itchat.send('@img@{}'.format('{}.jpg'.format(i)), msg['FromUserName'])
+                title = spider.get_tieba_img(inp+'/')
+                itchat.send('@fil@{}.zip'.format(title), msg['FromUserName'])
             itchat.send('@{}\u2005你只能爬取第一页楼主发的图片，要爬取更多图片，请联系@熏鱼饺子\u2005进行账户升级'.format(msg['ActualNickName']), msg['FromUserName'])
-            os.chdir('..')
-            shutil.rmtree(dirName)
+            os.remove(title+'.zip')
+            shutil.rmtree(title)
         else:
             for i in ('嘿','你好','hi','hello','hey','bonjour','bonsoir'):
                 if i in cont.lower():
