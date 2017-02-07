@@ -8,6 +8,8 @@ import json
 import string
 import zipfile
 
+_HEADERS = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
+
 def _zipdir(path, ziph):
     for root, dirs, files in os.walk(path):
         for file in files:
@@ -15,16 +17,14 @@ def _zipdir(path, ziph):
 
 def get_joke():
     url = 'http://www.qiushibaike.com/'
-    headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
-    web = requests.get(url, headers=headers)
+    web = requests.get(url, headers=_HEADERS)
     soup = BeautifulSoup(web.text, 'lxml')
     joke = random.choice(soup.select('div.content > span')).get_text()
     return joke
 
 def get_news():
     url = 'http://www.toutiao.com/api/pc/focus/'
-    headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
-    web = requests.get(url, headers=headers)
+    web = requests.get(url, headers=_HEADERS)
     data = json.loads(web.text)
     news = ''
     for i in data['data']['pc_feed_focus']:
@@ -75,7 +75,8 @@ def get_tieba_img(url):
     crawlUrl = url + '?see_lz=1&pn=1'
     web = requests.get(crawlUrl)
     soup = BeautifulSoup(web.text, 'lxml')
-    title = soup.select('h3.core_title_txt')[0].get('title')
+    titles = soup.select('h3.core_title_txt') or soup.select('h1.core_title_txt')
+    title = (titles[0].get('title') + '.txt').replace('/','\:')
     os.mkdir(title)
     os.chdir(title)
     for count, img in enumerate(soup.select('img.BDE_Image')):
@@ -100,7 +101,8 @@ def get_tieba_text(url):
     crawlUrl = url + '?see_lz=1&pn=1'
     web = requests.get(crawlUrl)
     soup = BeautifulSoup(web.text, 'lxml')
-    title = soup.select('h3.core_title_txt')[0].get('title') + '.txt'
+    titles = soup.select('h3.core_title_txt') or soup.select('h1.core_title_txt')
+    title = (titles[0].get('title') + '.txt').replace('/','\:')
     with codecs.open(title, 'w', 'utf-8') as f:
         for content in soup.select('div.d_post_content.j_d_post_content'):
             f.write(content.get_text(separator='\n'))
