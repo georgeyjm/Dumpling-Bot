@@ -6,7 +6,7 @@ Latest Version: **Pre-Release (Alpha 1.1.0)**
 
 Python Version: **3.5**
 
-Supported OS: **OSX(macOS) / Windows**
+Supported OS: **OSX(macOS)** / Windows (unsure)
 
 Dependencies: **itchat**, **requests (modified)**, bs4, sympy, pydub
 
