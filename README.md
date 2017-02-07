@@ -8,7 +8,7 @@ Python Version: **3.5**
 
 Supported OS: **OSX(macOS) / Windows**
 
-Dependencies: **itchat**, requests, bs4, sympy, pydub
+Dependencies: **itchat**, **requests (modified)**, bs4, sympy, pydub
 
 ##Known Issues
 See [Issues](https://github.com/yu-george/Dumpling-Bot/issues)
