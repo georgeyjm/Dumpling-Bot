@@ -1,5 +1,11 @@
 # *Dumpling Bot* Changelog
 
+### Alpha 1.1.0 (2017.2.7 9am)
+* Added in voice recognition and voice generation using Baidu API
+* Will respond to recordings with recordings (but not technically a recording, just a MP3 file)
+* Fixed issues
+* Added logging system to track error and info (currently only prints it onto the terminal)
+
 ### Alpha 1.0.3 (2017.2.5 3pm)
 * Convert between simplified Chinese and Traditional Chinese
 * Changed logic to fix some issues
