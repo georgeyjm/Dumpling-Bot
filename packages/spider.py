@@ -7,13 +7,14 @@ import codecs
 import json
 import string
 import zipfile
+import re
 
 _HEADERS = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 
-def _zipdir(path, ziph):
+def _zipdir(path, zipFile):
     for root, dirs, files in os.walk(path):
         for file in files:
-            ziph.write(os.path.join(root, file))
+            zipFile.write(os.path.join(root, file))
 
 def get_joke():
     url = 'http://www.qiushibaike.com/'
@@ -76,7 +77,7 @@ def get_tieba_img(url):
     web = requests.get(crawlUrl)
     soup = BeautifulSoup(web.text, 'lxml')
     titles = soup.select('h3.core_title_txt') or soup.select('h1.core_title_txt')
-    title = (titles[0].get('title') + '.txt').replace('/','\:')
+    title = (titles[0].get('title')).replace('/','\:')
     os.mkdir(title)
     os.chdir(title)
     for count, img in enumerate(soup.select('img.BDE_Image')):
@@ -108,3 +109,15 @@ def get_tieba_text(url):
             f.write(content.get_text(separator='\n'))
             f.write('\n')
     return title
+
+def search_baidupan(keyword):
+    panUrlRe = re.compile(r'(?:https?:\/\/)?(pan\.baidu\.com\/s\/[a-zA-Z0-9]*)(?: 提取密码:([0-9a-zA-Z]{4}))?')
+    url = 'http://www.wangpansou.cn/s.php?wp=0&ty=gn&op=gn&q={}'.format(keyword)
+    web = requests.get(url, headers=_HEADERS)
+    soup = BeautifulSoup(web.text, 'lxml')
+    for i in soup.select('td.cse-search-result_content_item_table_td'):
+        content = i.select('div.cse-search-result_content_item_bottom > div')[0].get_text()
+        match = panUrlRe.findall(content)
+        if match:
+            url, password = match[0]
+            yield url, password
