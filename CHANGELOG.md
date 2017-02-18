@@ -1,5 +1,10 @@
 # *Dumpling Bot* Changelog
 
+### Alpha 1.2.0 (2017.2.18 6pm)
+* Added basic user leveling system
+* Added BaiduYun search
+* Added trigonometry calculations (see PyMath)
+
 ### Alpha 1.1.0 (2017.2.7 9am)
 * Added in voice recognition and voice generation using Baidu API
 * Will respond to recordings with recordings (but not technically a recording, just a MP3 file)
