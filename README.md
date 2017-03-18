@@ -10,10 +10,10 @@ Supported OS: **OSX(macOS)** / Windows (unsure)
 
 Dependencies: **itchat**, **requests (modified)**, bs4, sympy, pydub
 
-##Known Issues
+## Known Issues
 See [Issues](https://github.com/yu-george/Dumpling-Bot/issues)
 
-##Goals
+## Goals
 - [x] News
 - [x] Jokes
 - [ ] Movie downloads
